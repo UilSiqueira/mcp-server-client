@@ -1,0 +1,41 @@
+services:
+  server:
+    build:
+      context: ./mcp_server
+      dockerfile: Dockerfile
+    container_name: mcp-api
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/postgres
+      - PYTHONPATH=/app
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    restart: always
+    container_name: mcp-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  client:
+    build:
+      context: ./mcp_client
+      dockerfile: Dockerfile
+    container_name: mcp-client
+    stdin_open: true
+    tty: true
+    depends_on:
+      - server
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    command: ["python", "client.py"]
+
+volumes:
+  postgres_data:
