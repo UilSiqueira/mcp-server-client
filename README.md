@@ -46,3 +46,6 @@ A complete **Micro Process Controller (MCP) project** for querying car informati
 - 📊 **Fictional vehicle data** for testing, generated using the Faker library
 - 🧱 Architecture best practices with **Domain-Driven Design (DDD)** for better code organization, scalability, and maintainability.
 
+![image](img/english-1.png)
+![image](img/english-2.png)
+![image](img/english-3.png)
